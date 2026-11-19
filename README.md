@@ -106,7 +106,7 @@ Windows покажет синее окно SmartScreen («неизвестный
 
 ```bash
 
-git clone https://github.com/ТВОЙ\\\_НИК/frostbyte.git
+git clone https://github.com/SHWWEPS/frostbyte.git
 
 cd frostbyte
 
@@ -332,7 +332,7 @@ Install the \[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0), the
 
 ```bash
 
-git clone https://github.com/YOUR\\\_NAME/frostbyte.git
+git clone https://github.com/SHWWEPS/frostbyte.git
 
 cd frostbyte
 
