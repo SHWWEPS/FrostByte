@@ -61,7 +61,7 @@ namespace DesktopSnow
             if (_hook == IntPtr.Zero)
                 _tray.ShowBalloonTip(4000, "Desktop Snow", "Не удалось включить сбор снежков (хук мыши недоступен). Снег и гирлянда работают.", WF.ToolTipIcon.Info);
 
-            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
             timer.Tick += (a, b) => Housekeep();
             timer.Start();
 
@@ -95,46 +95,89 @@ namespace DesktopSnow
 
         static void Housekeep()
         {
-            _s.Flush();
-
-            bool busy = _s.PauseFullscreen && ForeignFullscreen();
-            if (_s.PauseOnBattery && WF.SystemInformation.PowerStatus.PowerLineStatus == WF.PowerLineStatus.Offline) busy = true;
-
-            // гасим только если чужое полноэкранное окно держится 2 проверки подряд
-            if (busy) _busyCount++; else _busyCount = 0;
-
-            bool show = !_s.Paused && _busyCount < 2;
-            if (show && _overlay.Visibility != Visibility.Visible) { _overlay.Visibility = Visibility.Visible; _last = 0; }
-            else if (!show && _overlay.Visibility == Visibility.Visible) _overlay.Visibility = Visibility.Hidden;
-            if (show) _overlay.Housekeep();
+            UpdateVisibility();
+            _busyCount++;
+            if (_busyCount % 20 == 0)
+            {
+                _s.Flush();
+                if (_overlay.Visibility == Visibility.Visible) _overlay.Housekeep();
+            }
         }
 
-        // Полноэкранное окно ЧУЖОГО процесса. Свои окна игнорируем —
-        // иначе оверлей во весь экран принимал сам себя за игру и прятался каждую секунду.
+        static void UpdateVisibility()
+        {
+            bool show = !_s.Paused;
+            if (show && _s.PauseFullscreen) show = !ForeignFullscreen();
+            if (show && _s.PauseOnBattery && WF.SystemInformation.PowerStatus.PowerLineStatus == WF.PowerLineStatus.Offline) show = false;
+
+            if (show && _overlay.Visibility != Visibility.Visible)
+            {
+                _overlay.Visibility = Visibility.Visible;
+                _overlay.Housekeep();
+                _last = 0;
+            }
+            else if (!show && _overlay.Visibility == Visibility.Visible)
+            {
+                _overlay.Visibility = Visibility.Hidden;
+            }
+        }
+
         static bool ForeignFullscreen()
         {
-            IntPtr fg = Native.GetForegroundWindow();
-            if (fg == IntPtr.Zero || fg == _overlay.Hwnd) return false;
+            bool found = false;
+            int pid = Environment.ProcessId;
+            bool maxToo = _s.PauseOnMaximized;
 
-            Native.GetWindowThreadProcessId(fg, out uint pid);
-            if (pid == (uint)Environment.ProcessId) return false;
+            Native.EnumWindows((h, l) =>
+            {
+                if (!Native.IsWindowVisible(h)) return true;
+                if (Native.IsIconic(h)) return true;
+                if (Native.Cloaked(h)) return true;
 
-            string cls = Native.ClassOf(fg);
-            if (cls == "Progman" || cls == "WorkerW" || cls == "Shell_TrayWnd") return false;
+                Native.GetWindowThreadProcessId(h, out uint p);
+                if (p == (uint)pid) return true;
 
-            if (!Native.Bounds(fg, out Native.RECT r)) return false;
-            double fw = r.Right - r.Left, fh = r.Bottom - r.Top;
-            if (fw < 200 || fh < 200) return false;
+                string cls = Native.ClassOf(h);
+                if (cls == "Progman") return true;
+                if (cls == "WorkerW") return true;
+                if (cls == "Shell_TrayWnd") return true;
+                if (cls == "Shell_SecondaryTrayWnd") return true;
+                if ((Native.GetExStyle(h) & Native.WS_EX_TOOLWINDOW) != 0) return true;
 
-            IntPtr mon = Native.MonitorFromWindow(fg, Native.MONITOR_DEFAULTTONEAREST);
-            var mi = new Native.MONITORINFO { cbSize = Marshal.SizeOf<Native.MONITORINFO>() };
-            if (!Native.GetMonitorInfo(mon, ref mi)) return false;
+                if (!Native.Bounds(h, out Native.RECT r)) return true;
+                double fw = r.Right - r.Left;
+                double fh = r.Bottom - r.Top;
 
-            // rcWork — монитор без панели задач. Обычное развёрнутое окно
-            // шире рабочей области не станет, а настоящая игра/видео — станет.
-            double mw = mi.rcWork.Right - mi.rcWork.Left;
-            double mh = mi.rcWork.Bottom - mi.rcWork.Top;
-            return fw >= mw * 0.99 && fh >= mh * 0.99;
+                IntPtr mon = Native.MonitorFromWindow(h, 2);
+                Native.MONITORINFO mi = new Native.MONITORINFO();
+                mi.cbSize = Marshal.SizeOf(typeof(Native.MONITORINFO));
+                if (!Native.GetMonitorInfo(mon, ref mi)) return true;
+
+                double mw = mi.rcMonitor.Right - mi.rcMonitor.Left;
+                double mh = mi.rcMonitor.Bottom - mi.rcMonitor.Top;
+
+                // мелкое окно не в счёт — смотрим, что под ним
+                if (fw < mw * 0.6) return true;
+                if (fh < mh * 0.6) return true;
+
+                // настоящее полноэкранное: весь монитор
+                bool full = fw >= mw * 0.99 && fh >= mh * 0.99
+                         && Math.Abs(r.Left - mi.rcMonitor.Left) <= 2
+                         && Math.Abs(r.Top - mi.rcMonitor.Top) <= 2;
+
+                // плюс развёрнутые окна, если включена галочка
+                if (!full && maxToo)
+                {
+                    double ww = mi.rcWork.Right - mi.rcWork.Left;
+                    double wh = mi.rcWork.Bottom - mi.rcWork.Top;
+                    full = fw >= ww * 0.98 && fh >= wh * 0.98;
+                }
+
+                found = full;
+                return false;
+            }, IntPtr.Zero);
+
+            return found;
         }
 
         static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)

@@ -44,6 +44,7 @@ namespace DesktopSnow
 
         public int Fps { get; set; } = 60;
         public int WindowPollHz { get; set; } = 30;
+        public bool PauseOnMaximized { get; set; } = true;
         public bool PauseFullscreen { get; set; } = true;
         public bool PauseOnBattery { get; set; } = false;
         public bool Autostart { get; set; } = false;

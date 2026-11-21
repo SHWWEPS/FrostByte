@@ -137,6 +137,7 @@ namespace DesktopSnow
             Slide(p, "Частота кадров — плавность снега, гирлянды, машины", 15, 144, S.Fps, 1, v => S.Fps = (int)v, " FPS");
             Slide(p, "Слежение за окнами — как быстро сугроб едет за окном", 2, 60, S.WindowPollHz, 1, v => S.WindowPollHz = (int)v, " раз/с");
             Check(p, "Пауза в полноэкранных приложениях и играх", () => S.PauseFullscreen, v => S.PauseFullscreen = v);
+            Check(p, "Считать развёрнутые окна полноэкранными", () => S.PauseOnMaximized, v => S.PauseOnMaximized = v);
             Check(p, "Пауза при работе от батареи", () => S.PauseOnBattery, v => S.PauseOnBattery = v);
             Check(p, "Запускать вместе с Windows", () => S.Autostart, v => { S.Autostart = v; SetAutostart(v); });
             Btn(p, "Показать окна, на которых лежит снег", () =>
