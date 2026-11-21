@@ -249,6 +249,13 @@ and a colorful garland glows along your windows.
 
 
 
+<p align="center">
+  <img src="screenshot.png" width="49%" />
+  <img src="screenshot2.png" width="49%" />
+</p>
+
+
+
 \## Features
 
 
