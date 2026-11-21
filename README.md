@@ -34,7 +34,7 @@
 
 ## Скачать и запустить
 
-1. Открой **[Releases](https://github.com/SHWWEEPS/FrostByte/releases/latest)** и скачай `FrostByte.exe`
+1. Открой **[Releases](https://github.com/SHWWEPS/FrostByte/releases/latest)** и скачай `FrostByte.exe`
 2. Двойной клик — снег пошёл. Установка не нужна, .NET ставить не надо
 3. Правый клик по снежинке в трее → **«Создать ярлык на рабочем столе»**
 
