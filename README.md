@@ -10,8 +10,10 @@
 
 
 
-!\[FrostByte](screenshot.png)
-
+<p align="center">
+  <img src="screenshot.png" width="49%" />
+  <img src="screenshot2.png" width="49%" />
+</p>
 
 
 \---
@@ -243,6 +245,13 @@ MIT — делай что хочешь, только оставь упомина
 a snowplow drives in and clears it, snowballs roll and grow into snowmen,
 
 and a colorful garland glows along your windows.
+
+
+
+<p align="center">
+  <img src="screenshot.png" width="49%" />
+  <img src="screenshot2.png" width="49%" />
+</p>
 
 
 
