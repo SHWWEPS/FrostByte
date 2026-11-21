@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using SD = System.Drawing;
 using WF = System.Windows.Forms;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal static class Shortcut
     {
@@ -20,16 +20,16 @@ namespace DesktopSnow
                     return;
                 }
 
-                string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DesktopSnow");
+                string dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FrostByte");
                 Directory.CreateDirectory(dir);
                 string icoPath = Path.Combine(dir, "snow.ico");
                 SaveIcon(icoPath);
 
-                string lnk = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Снегопад.lnk");
+                string lnk = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "FrostByte.lnk");
                 Type shellType = Type.GetTypeFromProgID("WScript.Shell");
                 if (shellType == null)
                 {
-                    WF.MessageBox.Show("Windows не разрешает создать ярлык автоматически. Сделай вручную: правый клик по DesktopSnow.exe → Отправить → Рабочий стол (создать ярлык).", "Desktop Snow");
+                    WF.MessageBox.Show("Windows не разрешает создать ярлык автоматически. Сделай вручную: правый клик по FrostByte.exe → Отправить → Рабочий стол (создать ярлык).", "Desktop Snow");
                     return;
                 }
 

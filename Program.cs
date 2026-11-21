@@ -7,7 +7,7 @@ using System.Windows.Threading;
 using SD = System.Drawing;
 using WF = System.Windows.Forms;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal static class Program
     {
@@ -29,10 +29,10 @@ namespace DesktopSnow
         static void Main()
         {
             bool first;
-            _mutex = new System.Threading.Mutex(true, "DesktopSnow_SingleInstance", out first);
+            _mutex = new System.Threading.Mutex(true, "FrostByte_SingleInstance", out first);
             if (!first)
             {
-                System.Windows.MessageBox.Show("Снегопад уже запущен :J. Ищи снежинку в трее, возле часов (стрелка в верх ^).", "Desktop Snow");
+                System.Windows.MessageBox.Show("FrostByte уже запущен :J. Ищи снежинку в трее, возле часов (стрелка в верх ^).", "Desktop Snow");
                 return;
             }
             var app = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };            _s = Settings.Load();

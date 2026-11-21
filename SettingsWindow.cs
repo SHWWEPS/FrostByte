@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Win32;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal class SettingsWindow : Window
     {
@@ -173,8 +173,8 @@ namespace DesktopSnow
             {
                 using var k = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
                 if (k == null) return;
-                if (on) k.SetValue("DesktopSnow", "\"" + Environment.ProcessPath + "\"");
-                else k.DeleteValue("DesktopSnow", false);
+                if (on) k.SetValue("FrostByte", "\"" + Environment.ProcessPath + "\"");
+                else k.DeleteValue("FrostByte", false);
             }
             catch { }
         }

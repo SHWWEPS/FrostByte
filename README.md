@@ -10,10 +10,7 @@
 
 
 
-<p align="center">
-  <img src="screenshot.png" width="49%" />
-  <img src="screenshot2.png" width="49%" />
-</p>
+!\[FrostByte](screenshot.png)
 
 
 
@@ -81,7 +78,7 @@
 
 
 
-1\. Открой \*\*\[Releases](../../releases/latest)\*\* и скачай `DesktopSnow.exe`
+1\. Открой \*\*\[Releases](../../releases/latest)\*\* и скачай `FrostByte.exe`
 
 2\. Двойной клик — снег пошёл. Установка не нужна, .NET ставить не надо
 
@@ -109,7 +106,7 @@ Windows покажет синее окно SmartScreen («неизвестный
 
 ```bash
 
-git clone https://github.com/SHWWEPS/frostbyte.git
+git clone https://github.com/ТВОЙ\\\_НИК/frostbyte.git
 
 cd frostbyte
 
@@ -155,7 +152,7 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 
 &#x20; Программа только смотрит на клики, но никогда их не перехватывает.
 
-\- \*\*Настройки\*\* — JSON в `%APPDATA%\\\\DesktopSnow\\\\settings.json`.
+\- \*\*Настройки\*\* — JSON в `%APPDATA%\\\\FrostByte\\\\settings.json`.
 
 
 
@@ -249,13 +246,6 @@ and a colorful garland glows along your windows.
 
 
 
-<p align="center">
-  <img src="screenshot.png" width="49%" />
-  <img src="screenshot2.png" width="49%" />
-</p>
-
-
-
 \## Features
 
 
@@ -314,7 +304,7 @@ and a colorful garland glows along your windows.
 
 
 
-1\. Get `DesktopSnow.exe` from \*\*\[Releases](../../releases/latest)\*\*
+1\. Get `FrostByte.exe` from \*\*\[Releases](../../releases/latest)\*\*
 
 2\. Double-click. No install, no .NET runtime needed
 
@@ -342,7 +332,7 @@ Install the \[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0), the
 
 ```bash
 
-git clone https://github.com/SHWWEPS/frostbyte.git
+git clone https://github.com/YOUR\\\_NAME/frostbyte.git
 
 cd frostbyte
 
@@ -388,7 +378,7 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 
 &#x20; it observes clicks, never swallows them
 
-\- \*\*Settings\*\*: JSON at `%APPDATA%\\\\DesktopSnow\\\\settings.json`
+\- \*\*Settings\*\*: JSON at `%APPDATA%\\\\FrostByte\\\\settings.json`
 
 
 

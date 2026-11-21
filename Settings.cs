@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal class Settings
     {
@@ -53,7 +53,7 @@ namespace DesktopSnow
         [JsonIgnore] public bool Dirty;
         public void Touch() { Dirty = true; }
 
-        static string Dir => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DesktopSnow");
+        static string Dir => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FrostByte");
         static string FilePath => Path.Combine(Dir, "settings.json");
 
         public static Settings Load()

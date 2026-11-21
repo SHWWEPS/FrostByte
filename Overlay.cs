@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal class SnowCanvas : FrameworkElement
     {

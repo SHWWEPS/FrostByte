@@ -1,6 +1,6 @@
 using System;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal class Surface
     {

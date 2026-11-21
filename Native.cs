@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal static class Native
     {

@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 
-namespace DesktopSnow
+namespace FrostByte
 {
     internal partial class SnowEngine
     {
